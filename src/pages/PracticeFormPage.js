@@ -3,27 +3,26 @@ import { expect } from "@playwright/test";
 export class PracticeFormPage {
     constructor(page) {
         this.page = page;
-        this.firstNameField = page.locator('#firstName');
-        this.lastNameField = page.locator('#lastName');
-        this.mobileField = page.locator('#userNumber');
-        this.emailField = page.locator('#userEmail');
-        this.genderField = page.locator('[for="gender-radio-2"]');
+        this.firstName = page.locator('#firstName');
+        this.lastName = page.locator('#lastName');
+        this.mobile = page.locator('#userNumber');
+        this.email = page.locator('#userEmail');
+        this.gender = page.locator('[for="gender-radio-2"]');
         this.dob = page.locator('#dateOfBirthInput');
         this.submitBtn = page.locator('#submit');
         this.successHeading = page.locator('.modal-title');
-        this.hobbiesOption = page.locator('#hobbies-checkbox-1');
+   }
+
+    async fillFirstName(name) {
+        await this.firstName.fill(name);
     }
 
-    async fillFirstNameField(name) {
-        await this.firstNameField.fill(name);
+    async fillLastName(lastName) {
+        await this.lastName.fill(lastName);
     }
 
-    async fillLastNameField(lastName) {
-        await this.lastNameField.fill(lastName);
-    }
-
-    async fillEmailField(email) {
-        await this.emailField.pressSequentially(email).then(
+    async fillEmail(email) {
+        await this.email.pressSequentially(email).then(
             () => this.page.keyboard.press('Enter')
         );
     }
@@ -34,21 +33,25 @@ export class PracticeFormPage {
         );
     }
 
-    async fillMobileField(mobile) {
-        await this.mobileField.pressSequentially(mobile).then(
+    async fillMobile(mobile) {
+        await this.mobile.pressSequentially(mobile).then(
             () => this.page.keyboard.press('Enter')
         );
     }
 
     async checkGenderFemale() {
-        await this.genderField.setChecked(true);
+        await this.gender.setChecked(true);
     }
-
     async submitForm() {
         await this.submitBtn.click();
     }
 
     async assertSuccessSubmitForm() {
         await expect(this.successHeading).toContainText('Thanks for submitting the form');
+    }
+
+    async assertRegisteredFullName(value) {
+        const rowWithName = this.page.locator('tbody tr').filter({ hasText: 'Student Name' });
+        await expect(rowWithName).toContainText(value);
     }
 }

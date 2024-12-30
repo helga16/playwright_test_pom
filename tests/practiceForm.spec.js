@@ -9,14 +9,17 @@ test.beforeEach(async ({page, baseURL}) => {
 test('Sending the form where only required fields are filled', async ({page}) => {
     const practiceFormPage = new PracticeFormPage(page);
     const mobileNumber = Math.random().toString().substr(2, 10);
+    const firstName = faker.person.firstName();
+    const lastName = faker.person.lastName();
 
-    await practiceFormPage.fillFirstNameField(faker.person.firstName());
-    await practiceFormPage.fillLastNameField(faker.person.lastName());
-    await practiceFormPage.fillEmailField(faker.internet.email());
-    await practiceFormPage.fillMobileField(mobileNumber);
+    await practiceFormPage.fillFirstName(firstName);
+    await practiceFormPage.fillLastName(lastName);
+    await practiceFormPage.fillEmail(faker.internet.email());
+    await practiceFormPage.fillMobile(mobileNumber);
     await practiceFormPage.fillDob('20 Dec 2005');
     await practiceFormPage.checkGenderFemale();
 
     await practiceFormPage.submitForm();
     await practiceFormPage.assertSuccessSubmitForm();
+    await practiceFormPage.assertRegisteredFullName(firstName + ' ' + lastName);
 });
