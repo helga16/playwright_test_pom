@@ -1,18 +1,10 @@
 {
-  "name": "qa_pw_intro",
+  "name": "${PROJECT_NAME}",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {
-    "fsevents": "^2.3.2",
-    "playwright-core": "^1.46.1"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "@playwright/test": "^1.46.1",
-    "@types/node": "^22.5.2"
-  },
-  "scripts": {},
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "private": true
 }
